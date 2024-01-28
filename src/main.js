@@ -1,5 +1,3 @@
-'use strict';
-
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
@@ -16,6 +14,11 @@ const refs = {
   loadMoreBtn: document.querySelector('.load-btn'),
   loader: document.querySelector('.loader'),
 };
+
+const simplyGallery = new SimpleLightbox('.gallery-item a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 
 axios.defaults.baseURL = 'https://pixabay.com/api';
 const API_KEY = '41899926-74a7536d4d492e936dbb67b5b';
@@ -42,7 +45,7 @@ async function onSearch(event) {
   }
   try {
     const { hits, total } = await getImages(query);
-    maxPage = Math.ceil(total / 40);
+    maxPage = Math.ceil(totalHits / 40);
     createMarkup(hits, refs.gallery);
 
     if (hits.length > 0) {
@@ -83,7 +86,7 @@ async function onLoadMore() {
   } catch (error) {
     console.log(error);
   } finally {
-    if (page > maxPage) {
+    if (page === maxPage) {
       refs.loadMoreBtn.classList.add(hiddenClass);
       createMessage(
         "We're sorry, but you've reached the end of search results!"
@@ -135,10 +138,7 @@ function createMarkup(hits) {
     )
     .join('');
   refs.gallery.insertAdjacentHTML('beforeend', markup);
-  const simplyGallery = new SimpleLightbox('.gallery-item a', {
-    captionsData: 'alt',
-    captionDelay: 250,
-  });
+  simplyGallery.refresh();
 }
 
 function createMessage(message) {
