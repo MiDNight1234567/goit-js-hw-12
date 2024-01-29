@@ -81,7 +81,7 @@ async function onLoadMore() {
   } catch (error) {
     console.log(error);
   } finally {
-    if (page > maxPage) {
+    if (page === maxPage) {
       refs.loadMoreBtn.classList.add(hiddenClass);
       createMessage(
         "We're sorry, but you've reached the end of search results!"
