@@ -118,7 +118,7 @@ body {
   width: 100%;
   justify-content: center;
   /* max-width: 1130px; */
-  padding: 0 auto;
+  padding: 0 5px;
   background-color: #ffffff;
   margin: 0 auto;
   box-shadow: 10px 1px 10px rgba(74, 41, 41, 0.366);
