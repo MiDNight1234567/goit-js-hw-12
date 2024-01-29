@@ -44,8 +44,8 @@ async function onSearch(event) {
     return;
   }
   try {
-    const { hits, totalHits } = await getImages(query);
-    maxPage = Math.ceil(totalHits / 40);
+    const { hits, total } = await getImages(query);
+    maxPage = Math.ceil(total / 40);
     createMarkup(hits, refs.gallery);
 
     if (hits.length > 0) {
