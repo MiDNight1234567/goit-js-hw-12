@@ -45,7 +45,7 @@ async function onSearch(event) {
   }
   try {
     const { hits, total } = await getImages(query);
-    maxPage = Math.ceil(totalHits / 40);
+    maxPage = Math.ceil(total, hits / 40);
     createMarkup(hits, refs.gallery);
 
     if (hits.length > 0) {
@@ -86,7 +86,7 @@ async function onLoadMore() {
   } catch (error) {
     console.log(error);
   } finally {
-    if (page < maxPage) {
+    if (page === maxPage) {
       refs.loadMoreBtn.classList.add(hiddenClass);
       createMessage(
         "We're sorry, but you've reached the end of search results!"
