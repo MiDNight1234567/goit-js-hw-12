@@ -115,11 +115,12 @@ body {
   flex-wrap: wrap;
   gap: 24px;
   border-radius: 15px;
-  /* width: 100%; */
-  max-width: 1130px;
-  padding: 24px 156px;
+  width: 100%;
+  justify-content: center;
+  /* max-width: 1130px; */
+  padding: 0 auto;
   background-color: #ffffff;
-  margin: auto;
+  margin: 0 auto;
   box-shadow: 10px 1px 10px rgba(74, 41, 41, 0.366);
 }
 
