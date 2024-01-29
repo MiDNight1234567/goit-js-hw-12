@@ -23,6 +23,11 @@ let page = 1;
 let query = '';
 let maxPage = 0;
 
+const simplyGallery = new SimpleLightbox('.gallery-item a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
+
 refs.form.addEventListener('submit', onSearch);
 
 async function onSearch(event) {
@@ -133,10 +138,7 @@ function createMarkup(hits) {
     )
     .join('');
   refs.gallery.insertAdjacentHTML('beforeend', markup);
-  const simplyGallery = new SimpleLightbox('.gallery-item a', {
-    captionsData: 'alt',
-    captionDelay: 250,
-  });
+  simplyGallery.refresh();
 }
 
 function createMessage(message) {
