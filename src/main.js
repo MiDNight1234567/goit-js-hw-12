@@ -165,10 +165,10 @@ function scrollImg() {
   window.scrollBy({ top: rect.height * 2, left: 0, behavior: 'smooth' });
 }
 
-function showLoader() {
-  refs.loader.classList.remove('is-hidden');
+function showLoadMoreBtn() {
+  refs.loadMoreBtn.classList.remove('is-hidden');
 }
 
-function hideLoader() {
-  refs.loader.classList.add('is-hidden');
+function hideLoadMoreBtn() {
+  refs.loadMoreBtn.classList.add('is-hidden');
 }
