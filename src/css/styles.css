@@ -117,13 +117,14 @@ body {
   border-radius: 15px;
   width: 100%;
   /* max-width: 1130px; */
-  padding: 0px 80px;
+  padding: 0px auto;
   background-color: #ffffff;
-  margin: auto;
+  margin: 0px auto;
   box-shadow: 10px 1px 10px rgba(74, 41, 41, 0.366);
 }
 
 .gallery-item {
+  margin: 0px 10px 0px 10px;
   flex-basis: calc((100% - 72 px) / 4);
   transition: transform 250ms ease-in-out;
   background-color: #fafafa;
@@ -137,7 +138,7 @@ body {
 }
 
 .gallery-item:hover .gallery-descr {
-  background-image: linear-gradient(320deg, #525aca 0%, #bfd752 100%);
+  background-image: linear-gradient(320deg, #4854ff 0%, #e0ff58 100%);
 }
 
 .gallery-image {
@@ -151,7 +152,7 @@ body {
   width: 360px;
   text-align: center;
   height: 45px;
-  background-image: linear-gradient(320deg, #afc9c9 0%, #ddb1a2 100%);
+  background-image: linear-gradient(320deg, #4854ff 0%, #e0ff58 100%);
 }
 
 .descr-span {
