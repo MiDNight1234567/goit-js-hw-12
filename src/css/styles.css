@@ -124,7 +124,7 @@ body {
 }
 
 .gallery-item {
-  flex-basis: calc((100% - 72 px) / 4);
+  flex-basis: calc((100% - 72 px) / 3);
   transition: transform 250ms ease-in-out;
   background-color: #fafafa;
   box-shadow: 0px 2px 1px rgba(46, 47, 66, 0.08),
