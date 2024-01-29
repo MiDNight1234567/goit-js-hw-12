@@ -23,73 +23,73 @@ const simplyGallery = new SimpleLightbox('.gallery-item a', {
 axios.defaults.baseURL = 'https://pixabay.com/api';
 const API_KEY = '41899926-74a7536d4d492e936dbb67b5b';
 
-const queryParams = {
-  page: 1,
-  query: '',
-  maxPage: 0,
-  per_page: 40,
-};
+const hiddenClass = 'is-hidden';
+let page = 1;
+let query = '';
+let maxPage = 0;
 
 refs.form.addEventListener('submit', onSearch);
+
 async function onSearch(event) {
   event.preventDefault();
-  hideLoadMoreBtn();
   refs.gallery.innerHTML = '';
-  queryParams.page = 1;
-  queryParams.query = refs.form.query.value.trim();
-  if (!queryParams.query) {
+  page = 1;
+  refs.loadMoreBtn.classList.add(hiddenClass);
+  query = refs.form.query.value.trim();
+
+  if (!query) {
     createMessage(
-      `The search field can't be empty😉! Please, enter your request!`
+      `The search field can't be empty! Please, enter your request!`
     );
     return;
   }
   try {
-    showLoader();
-    const { hits, totalHits } = await getImages(queryParams);
-    queryParams.maxPage = Math.ceil(totalHits / queryParams.per_page);
+    const { hits, totalHits } = await getImages(query);
+    maxPage = Math.ceil(totalHits / 40);
     createMarkup(hits, refs.gallery);
-    simplyGallery.refresh();
+
     if (hits.length > 0) {
-      showLoadMoreBtn();
+      refs.loadMoreBtn.classList.remove(hiddenClass);
       refs.loadMoreBtn.addEventListener('click', onLoadMore);
     } else {
-      hideLoadMoreBtn();
+      refs.loadMoreBtn.classList.add(hiddenClass);
       createMessage(
-        `Sorry, there are no images matching your search query🙃. Please, try again!`
+        `Sorry, there are no images matching your search query. Please, try again!`
       );
     }
-    hideLoader();
+    showLoader(false);
   } catch (error) {
     console.log(error);
   } finally {
     refs.form.reset();
-    if (queryParams.page === queryParams.maxPage) {
-      hideLoadMoreBtn();
+    if (page === maxPage) {
+      refs.loadMoreBtn.classList.add(hiddenClass);
       createMessage(
-        "We're sorry, but you've reached the end of search results🙃!"
+        "We're sorry, but you've reached the end of search results!"
       );
     }
   }
 }
 
 async function onLoadMore() {
-  queryParams.page += 1;
+  page += 1;
   try {
-    showLoader();
-    hideLoadMoreBtn();
-    const { hits } = await getImages(queryParams);
+    showLoader(true);
+    refs.loadMoreBtn.classList.add(hiddenClass);
+    const { hits } = await getImages(query, page);
     createMarkup(hits, refs.gallery);
-    simplyGallery.refresh();
-    hideLoader();
+    showLoader(false);
+
     scrollImg();
-    showLoadMoreBtn();
+
+    refs.loadMoreBtn.classList.remove(hiddenClass);
   } catch (error) {
     console.log(error);
   } finally {
-    if (queryParams.page === queryParams.maxPage) {
-      hideLoadMoreBtn();
+    if (page === maxPage) {
+      refs.loadMoreBtn.classList.add(hiddenClass);
       createMessage(
-        "We're sorry, but you've reached the end of search results🙃!"
+        "We're sorry, but you've reached the end of search results!"
       );
     }
   }
@@ -163,12 +163,4 @@ function showLoader(state = true) {
 function scrollImg() {
   const rect = document.querySelector('.gallery-link').getBoundingClientRect();
   window.scrollBy({ top: rect.height * 2, left: 0, behavior: 'smooth' });
-}
-
-function showLoadMoreBtn() {
-  refs.loadMoreBtn.classList.remove('is-hidden');
-}
-
-function hideLoadMoreBtn() {
-  refs.loadMoreBtn.classList.add('is-hidden');
 }
