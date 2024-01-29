@@ -15,11 +15,6 @@ const refs = {
   loader: document.querySelector('.loader'),
 };
 
-const simplyGallery = new SimpleLightbox('.gallery-item a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-});
-
 axios.defaults.baseURL = 'https://pixabay.com/api';
 const API_KEY = '41899926-74a7536d4d492e936dbb67b5b';
 
@@ -86,7 +81,7 @@ async function onLoadMore() {
   } catch (error) {
     console.log(error);
   } finally {
-    if (page === maxPage) {
+    if (page > maxPage) {
       refs.loadMoreBtn.classList.add(hiddenClass);
       createMessage(
         "We're sorry, but you've reached the end of search results!"
@@ -132,13 +127,16 @@ function createMarkup(hits) {
       src="${webformatURL}"
       alt="${tags}"
     />
-    <p class="gallery-descr">Likes: <span class="descr-span">${likes}</span> Views: <span class="descr-span">${views}</span> Comments: <span class="descr-span">${comments}</span> Downloads: <span class="descr-span">${downloads}</span></p>
+    <p class="gallery-descr">likes: <span class="descr-span">${likes}</span> views: <span class="descr-span">${views}</span> comments: <span class="descr-span">${comments}</span> downloads: <span class="descr-span">${downloads}</span></p>
   </a>
 </li>`
     )
     .join('');
   refs.gallery.insertAdjacentHTML('beforeend', markup);
-  simplyGallery.refresh();
+  const simplyGallery = new SimpleLightbox('.gallery-item a', {
+    captionsData: 'alt',
+    captionDelay: 250,
+  });
 }
 
 function createMessage(message) {
