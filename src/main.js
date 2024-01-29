@@ -89,7 +89,7 @@ async function onLoadMore() {
     if (queryParams.page === queryParams.maxPage) {
       hideLoadMoreBtn();
       createMessage(
-        "We're sorry, but you've reached the end of search results!"
+        "We're sorry, but you've reached the end of search results🙃!"
       );
     }
   }
